@@ -33,7 +33,7 @@ public interface SupportView<T extends ViewDataBinding> extends BaseView<T> {
 
     /**
      * Show progress view associated with current page
-     * Use default attach view {@code R.android.id.content}.
+     * Use default attach view {@code R.android.id.cåontent}.
      */
     void progress(boolean isShow);
 

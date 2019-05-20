@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer;
 import com.sharry.demo.base.view.SupportView;
 
 /**
- * @author Sharry <a href="xiaoyu.zhu@1hai.cn">Contact me.</a>
+ * @author Sharry <a href="SharryChooCHN@Gmail.com">Contact me.</a>
  * @version 1.0
  * @since 2019-05-16 17:40
  */

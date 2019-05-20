@@ -5,7 +5,7 @@ import android.widget.ListView
 import androidx.databinding.BindingAdapter
 
 /**
- * @author Sharry [Contact me.](xiaoyu.zhu@1hai.cn)
+ * @author Sharry [Contact me.](SharryChooCHN@Gmail.com)
  * @version 1.0
  * @since 2019-05-20 17:22
  */

@@ -8,7 +8,7 @@ import com.sharry.demo.base.livedata.SingleLiveData
 import com.sharry.demo.base.viewmodel.SupportViewModel
 
 /**
- * @author Sharry <a href="xiaoyu.zhu@1hai.cn">Contact me.</a>
+ * @author Sharry <a href="SharryChooCHN@Gmail.com">Contact me.</a>
  * @version 1.0
  * @since 2019-05-20 16:34
  */
