@@ -18,9 +18,9 @@ class MainViewModel(application: Application) : SupportViewModel(application) {
     val isScrollToBottom = SingleLiveData<Boolean>()
 
     fun start() {
-        toastMsg.value = "模拟网络请求开始"
+        toastMsgSource.value = "模拟网络请求开始"
         Handler().postDelayed({
-            toastMsg.value = "模拟网络请求结束"
+            toastMsgSource.value = "模拟网络请求结束"
             for (i in 0..10) {
                 dataSetHolder.add("Item position is ${i}")
             }

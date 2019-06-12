@@ -6,7 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import com.sharry.demo.base.observer.TipObserver;
+import com.sharry.demo.base.observer.ToastObserver;
+import com.sharry.demo.base.observer.ViewStatusObserver;
 import com.sharry.demo.base.view.SupportView;
+import com.sharry.demo.base.viewmodel.SupportViewModel;
 
 /**
  * @author Sharry <a href="SharryChooCHN@Gmail.com">Contact me.</a>
@@ -25,6 +29,19 @@ public abstract class BaseMvvmActivity<DataBinding extends ViewDataBinding> exte
             throw new NullPointerException("Cannot find ViewDataBinding that layout id is: " + layoutResId);
         }
         initDataBinding(dataBinding);
+    }
+
+
+    /**
+     * Do common subscribe
+     */
+    protected <ViewModel extends SupportViewModel> void subscribeViewSource(@NonNull ViewModel viewModel) {
+        // Set observer that view status source.
+        viewModel.setViewStatusObserve(this, ViewStatusObserver.create(this, this));
+        // Set observer that view tip msg source.
+        viewModel.setTipMsgSourceObserver(this, TipObserver.create(this));
+        // Set observer that view toast msg source.
+        viewModel.setToastMsgSourceObserver(this, ToastObserver.create(this));
     }
 
     @Override

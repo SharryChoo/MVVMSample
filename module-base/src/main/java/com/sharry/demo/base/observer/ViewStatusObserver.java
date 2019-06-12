@@ -15,22 +15,25 @@ import com.sharry.demo.base.view.SupportViewStatus;
  */
 public class ViewStatusObserver implements Observer<SupportViewStatus> {
 
+    /**
+     * Create an instance of View Status.
+     *
+     * @param view  the support view.
+     * @param owner lifecycle owner.
+     */
     public static ViewStatusObserver create(@NonNull SupportView view,
-                                            @NonNull LifecycleOwner owner,
-                                            @NonNull Observer<Boolean> networkRetryObserver) {
+                                            @NonNull LifecycleOwner owner) {
         Preconditions.checkNotNull(view);
         Preconditions.checkNotNull(owner);
-        Preconditions.checkNotNull(networkRetryObserver);
-        return new ViewStatusObserver(view, owner, networkRetryObserver);
+        return new ViewStatusObserver(view, owner);
     }
 
     private final SupportView mView;
     private final SingleLiveData<Boolean> mNetworkRetryObservable;
 
-    private ViewStatusObserver(SupportView view, LifecycleOwner owner, Observer<Boolean> networkRetryObserver) {
+    private ViewStatusObserver(SupportView view, LifecycleOwner owner) {
         this.mView = view;
         this.mNetworkRetryObservable = new SingleLiveData<>();
-        this.mNetworkRetryObservable.observe(owner, networkRetryObserver);
     }
 
     @Override
@@ -58,6 +61,10 @@ public class ViewStatusObserver implements Observer<SupportViewStatus> {
             default:
                 break;
         }
+    }
+
+    public void setNetworkRetryObserver(LifecycleOwner owner, Observer observer) {
+        mNetworkRetryObservable.observe(owner, observer);
     }
 
 }

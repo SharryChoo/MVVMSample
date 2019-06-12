@@ -23,55 +23,68 @@ import com.sharry.demo.base.view.SupportViewStatus;
 public abstract class SupportViewModel extends AndroidViewModel {
 
     /**
-     * The status associated with the special view that using this ViewModel.
+     * The viewStatusSource associated with the special view that using this ViewModel.
      */
-    protected final SingleLiveData<SupportViewStatus> status;
+    protected final SingleLiveData<SupportViewStatus> viewStatusSource = new SingleLiveData<>();
 
     /**
      * The tip message associated with the special view that using this ViewModel.
      */
-    protected final SingleLiveData<String> tipMsg;
+    protected final SingleLiveData<String> tipMsgSource = new SingleLiveData<>();
 
     /**
      * The toast message associated with the special view that using this ViewModel.
      */
-    protected final SingleLiveData<String> toastMsg;
-
-    /**
-     * The observer {@link Observer#onChanged} invoke when user click network retry.
-     */
-    private final Observer<Boolean> mNetworkRetryObserver = new Observer<Boolean>() {
-        @Override
-        public void onChanged(Boolean isRetry) {
-            if (isRetry) {
-                networkRetry();
-            }
-        }
-    };
+    protected final SingleLiveData<String> toastMsgSource = new SingleLiveData<>();
 
     public SupportViewModel(@NonNull Application application) {
         super(application);
-        this.status = new SingleLiveData<>();
-        this.tipMsg = new SingleLiveData<>();
-        this.toastMsg = new SingleLiveData<>();
-    }
-
-    /**
-     * Init this ViewModel, U need invoke sequence after ViewModel constructor.
-     */
-    public <View extends SupportView> void init(@NonNull LifecycleOwner owner, @NonNull View view) {
-        Preconditions.checkNotNull(owner);
-        Preconditions.checkNotNull(view);
-        this.status.observe(owner, ViewStatusObserver.create(view, owner, mNetworkRetryObserver));
-        this.tipMsg.observe(owner, TipObserver.create(view));
-        this.toastMsg.observe(owner, ToastObserver.create(view));
     }
 
     /**
      * The method invoke when first network error and u click retry.
      */
-    protected void networkRetry() {
+    protected void onNetworkRetry() {
 
+    }
+
+    /**
+     * Set a observer for viewStatusSource.
+     */
+    public void setViewStatusObserve(@NonNull LifecycleOwner owner,
+                                     @NonNull ViewStatusObserver viewStatusObserver) {
+        Preconditions.checkNotNull(owner);
+        Preconditions.checkNotNull(viewStatusObserver);
+        viewStatusSource.observe(owner, viewStatusObserver);
+        // The observer {@link Observer#onChanged} invoke when user click network retry.
+        viewStatusObserver.setNetworkRetryObserver(owner, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isRetry) {
+                if (isRetry) {
+                    onNetworkRetry();
+                }
+            }
+        });
+    }
+
+    /**
+     * Set a observer for tipMsgSource.
+     */
+    public void setTipMsgSourceObserver(@NonNull LifecycleOwner owner,
+                                        @NonNull TipObserver tipObserver) {
+        Preconditions.checkNotNull(owner);
+        Preconditions.checkNotNull(tipObserver);
+        tipMsgSource.observe(owner, tipObserver);
+    }
+
+    /**
+     * Set a observer for toastMsgSource.
+     */
+    public void setToastMsgSourceObserver(@NonNull LifecycleOwner owner,
+                                          @NonNull ToastObserver toastObserver) {
+        Preconditions.checkNotNull(owner);
+        Preconditions.checkNotNull(toastObserver);
+        toastMsgSource.observe(owner, toastObserver);
     }
 
 }
